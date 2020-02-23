@@ -1,0 +1,56 @@
+#version 330 core
+
+layout(location=0) out vec4 out_color;
+ 
+in vec4 vertexColor; // Now interpolated across face
+in vec4 viewPos;
+in vec3 viewNormal;
+struct Light
+{
+    vec4 pos;
+    vec4 color;
+};
+uniform Light light;
+uniform float shiny;
+uniform int matChoice;
+
+void main()
+{	
+	// Just output interpolated color
+	out_color = vertexColor;
+    vec3 P = viewPos.xyz;
+    vec3 N = normalize(viewNormal);
+    vec3 L;
+    float Rad_attenuation;
+    float d;
+if(light.pos.w>0)
+{
+    vec3 v = light.pos.xyz - P;
+    d = length(v)/4.0;
+    Rad_attenuation = 1.0/(d*d+1.0);
+    L = normalize(v);
+}
+else
+{
+    L=normalize(light.pos.xyz);
+    Rad_attenuation = 0.75;
+}
+    float diffuse_component=max(0, dot(N,L));
+    vec3 V = normalize(-P);
+    vec3 H = normalize(V+L);
+    float spec_component = pow((max(0, dot(N,H))),shiny);
+    vec3 kd;
+if(matChoice==1)
+{
+    kd=vec3(1,0,0);
+}
+else
+{
+    kd=vertexColor.xyz;
+}
+vec3 ks=vec3(1.0f);
+
+vec3 final= (light.color.xyz)*(diffuse_component)*(Rad_attenuation)*(kd+spec_component*ks);
+out_color = vec4(final,1.0f);
+}
+
