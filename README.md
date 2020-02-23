@@ -1,7 +1,11 @@
 BasicGraphics
 =============
 
+<<<<<<< HEAD
 This is a very basic OpenGL sample
+=======
+This is a very basic OpenGL sample  
+>>>>>>> d60f574eb7d3d0dbe340ba835a66af934a108073
 
 ## Dependencies
 
