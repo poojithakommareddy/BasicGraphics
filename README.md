@@ -1,7 +1,7 @@
 BasicGraphics
 =============
 
-This is a very basic OpenGL sample for use in SUNY Polytechnic Institute's CS 450/548 Computer Graphics course.  
+This is a very basic OpenGL sample
 
 ## Dependencies
 
